@@ -1,2 +1,2 @@
 # recursion
-Stydy Log For Recursion
+Stydying Computer Science.
