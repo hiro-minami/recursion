@@ -1,2 +1,2 @@
 # recursion
-Stydying Computer Science.
+Studying Computer Science.
