@@ -22,7 +22,7 @@ int productSequenceOfi(int a, int b) {
 */
 int muliplyOfc(int a, int b) {
     if(b <= 0) return 1;
-    return muliplyOfc(a, b-1);
+    return g(a) * muliplyOfc(a, b-1);
 }
 
 int main(){
