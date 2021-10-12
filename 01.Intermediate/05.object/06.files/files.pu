@@ -1,0 +1,17 @@
+@startuml Files
+class Files {
+    + string fileName
+    + string fileExtension
+    + string content
+    + bool locked
+    + string parentFolder
+    + File(string fileName, string fileExtension, string content, bool locked,string parentFolder)
+    +  bool isFileExtensionWithinExpectations(string fileExtension)
+    + string getLifetimeBandwidthSize()
+    + string getFileType()
+    + string prependContent(string data)
+    + string appendContent(string data)
+    + string addContent(string data, int position)
+    + string showFileLocation()
+}
+@enduml

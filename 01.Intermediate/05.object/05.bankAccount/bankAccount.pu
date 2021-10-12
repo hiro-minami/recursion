@@ -1,0 +1,14 @@
+@startuml BankAccount
+class BankAccount {
+    + string bankName
+    + string ownerName
+    + int savings
+    + double interestPerDay
+    BankAccount(string bankName, string ownerName, int savings)
+    + string showInfo()
+    + int depositMoney(int depositAmount)
+    + int withdrawMoney(int withdrawAmount)
+    + double pastime(int days)
+
+}
+@enduml

@@ -1,0 +1,19 @@
+@startuml User
+class User {
+    + string username
+    + string firstName
+    + string lastName
+    + string email
+    + string passwordHashed
+    + int birthMonth
+    + int birthYear
+    + string biographyDescription
+    + string favoriteHikingLocation
+    + User()
+    + string getFullName()
+    + int getAge()
+    + int birthdayCalculator()
+    + string showProfile()
+    + bool confirmPassword(string passwordString)
+}
+@enduml

@@ -1,0 +1,20 @@
+@startuml Animal
+class Animal {
+    + string name
+    + string species
+    + string description
+    + double weightKg
+    + double heightM
+    + bool isPredator
+    + double speedKph
+    + string urlPic
+    + string registerDate
+    {static} double activityMultiplier = 1.2
+    + Animal(string name, string species, string description, double weightKg, double heightM, bool isPredator, double speedKph, string urlPic, string registerDate)
+    + string getStateString()
+    + double getBmi()
+    + double getDailyCalories()
+    + bool isDangerous()
+    + bool isFaster(Animal animal)
+}
+@enduml
