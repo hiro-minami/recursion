@@ -1,0 +1,32 @@
+@startuml Invoice
+class Product {
+    + string title
+    + double price
+    + Product(string title, double price)
+}
+
+class InvoiceItemNode {
+    + int quantity
+    + Product product
+    + InvoiceItemNode* next
+    + InvoiceItemNode(int quantity, Product product)
+    + double getTotalPrice()
+}
+
+class Invoice {
+    + string invoiceNumber
+    + string invoiceDate
+    + string company
+    + string companyAddress
+    + string billToName
+    + string billToAddress
+    + InvoiceItemNode* invoiceItemHeadNode
+    + Invoice(string invoiceNumber, string invoiceDate, string company, string companyAddress, string billToName, string billToAddress)
+    + double amountDue(bool taxes)
+    + void printBuyingItems()
+    + void printInvoice()
+}
+
+Product --> InvoiceItemNode
+InvoiceItemNode --> Invoice
+@enduml
