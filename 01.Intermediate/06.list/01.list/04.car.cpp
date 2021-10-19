@@ -58,5 +58,8 @@ int main(){
     arr2[5] = 7;
     printArray(arr2, sizeof(arr2)/sizeof(int));
 
+    string a = "asss";
+    a.substr()
+
     return 0;
 }
