@@ -1,0 +1,23 @@
+@startuml Animal
+class Animal {
+    + string species
+    + double weightKg
+    + double heightM
+    + bool predator
+    + Animal(string species, double weightKg, double heightM, bool predator)
+    + void domesticate()
+}
+
+class Hunter {
+    + string name
+    + double weightKg
+    + double heightM
+    + double strength
+    + double cageCubicMeters
+    + Hunter(string name, int age, double weightKg, double heightM, double strength, double cageCubicMeters)
+    + bool canCaptureAnimal(Animal animal)
+    + bool attemptToDomesticate(Animal animal)
+    + double strengthKg()
+}
+Hunter --> Animal
+@enduml
