@@ -23,6 +23,7 @@ int main() {
     dArr.insert(dArr.begin(), 3);
     dArr.insert(dArr.begin(), {3,43,5234,34});
     printArray(dArr);
+    dArr.substr()
 
     // 配列の先頭の要素を削除するO(n)
     cout << "要素削除" << endl;
