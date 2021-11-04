@@ -24,13 +24,20 @@ class Deck {
     constructor() {
         this.deck = Deck.generateDeck();
     }
-    public static generateDeck(): Card[] {
+    public static generateDeck(gameMode: string = null): Card[] {
         let newDeck: Card[] = [];
         const suits = ["♣", "♦", "♥", "♠"];
         const values = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"];
+        const blackJack = new Map<string, number>();
+        blackJack.set("A", 1);
+        blackJack.set("J", 10);
+        blackJack.set("Q", 10);
+        blackJack.set("K", 10);
         for (let i = 0; i < suits.length; i++) {
             for (let j = 0; j < values.length; j++) {
-                newDeck.push(new Card(suits[i], values[j], j + 1));
+                let currentValue = values[j];
+                let intValue = gameMode === "21" ? (currentValue in blackJack ? blackJack.get(currentValue) : parseInt(currentValue)) : j + 1;
+                newDeck.push(new Card(suits[i], values[j], intValue));
             }
         }
         return newDeck;
@@ -102,15 +109,60 @@ class Dealer {
         }
         return value > 21 ? 0 : value;
     }
+    // ブラックジャックで誰が勝利したか表示する関数を作成します。
+    // それぞれのプレイヤーの手札をscore21Individualで計算し、配列に保存します。例: [10,16,15,16,15,15]
+    // この場合、勝利するプレイヤーが複数存在することから、cache[10] = 1, cache[15] = 3, cache[16] = 2のように書き換えます。
+    // 配列 [10,16,15,16,15,15]の最大値は16で、cache[16] > 1なのでドローになります。
+    // もし、0 <= cache[16] <= 1なら、そのプレイヤーの勝利、それ以外の場合は勝者が誰もいないことになります。
+    // ではこのロジックを関数にしてみましょう。
+    public static winnerOf21(table: Table): string {
+        // プレイヤーの手札の合計を入れるための配列を作成
+        let points = [];
+        // 得点の出現回数をまとめたハッシュマップ
+        let cache = {};
+        for (let i = 0; i < table.players.length; i++) {
+            let point = Dealer.score21Individual(table.players[i]);
+            points.push(point);
+
+            if (cache[point] >= 1) cache[point] += 1;
+            else cache[point] = 1;
+        }
+        // 各プレイヤーの得点を確認します。
+        console.log(points);
+        // 最大の点数を出している位置を特定する
+        let winnerIndex = HelperFunctions.maxInArrayIndex(points);
+        if (cache[points[winnerIndex]] > 1) return "It is a draw ";
+        else if (cache[points[winnerIndex]] >= 0) return `player ${winnerIndex + 1} is the winner`;
+        else return "No winners..";
+    }
+    // 卓のゲームの種類によって勝利条件を変更するcheckWinnerというメソッドを作成します。
+    static checkWinner(table: Table) {
+        if (table["gameMode"] == "21") return Dealer.winnerOf21(table);
+        else return "no game";
+    }
 }
 
-// PlayerAの手札
-let card1 = new Card("♦︎", "A", 1);
-let card2 = new Card("♦︎", "J", 11);
+// 計算のみを行うHelperFunctionsクラスを定義
+class HelperFunctions {
+    // 数値で構成される配列を受け取り、最大値のインデックスを返します。
+    public static maxInArrayIndex(intArr: number[]) {
+        let maxIndex = 0;
+        let maxValue = intArr[0];
+        for (let i = 0; i < intArr.length; i++) {
+            if (maxValue < intArr[i]) {
+                maxValue = intArr[i];
+                maxIndex = i;
+            }
+        }
+        return maxIndex;
+    }
+}
 
-// PlayerBの手札
-let card3 = new Card("♦︎", "9", 9);
-let card4 = new Card("♦︎", "K", 13);
+let table1 = Dealer.startGame(1, "poker");
+let table2 = Dealer.startGame(3, "21");
 
-console.log(Dealer.score21Individual([card1, card2]));
-console.log(Dealer.score21Individual([card3, card4]));
+Dealer.printTableInformation(table1);
+console.log(Dealer.checkWinner(table1));
+
+Dealer.printTableInformation(table2);
+console.log(Dealer.checkWinner(table2));
